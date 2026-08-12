@@ -53,9 +53,14 @@ Checklist a validar com o usuário ANTES de iniciar:
 <a name="fase-2"></a>
 ## Fase 2 — Reserva do namespace
 
+**Qual caminho usar? (confirmado na documentação SAP)** Os dois caminhos registram o namespace no **mesmo registro global da SAP** — o Request Namespace do Landscape Portal cria o namespace diretamente no registro global (não é preciso reserva prévia no SAP for Me), e um namespace reservado antes no SAP for Me aparece no portal para instalação. A regra de decisão:
+- **Public Edition 3SL (parceiro)**: configure o acesso ao Landscape Portal primeiro e reserve pelo próprio portal (Caminho A).
+- **Steampunk (BTP ABAP Environment)**: a SAP exige registrar o namespace **ANTES do primeiro provisioning** via SAP for Me (Caminho B) — só assim ele é entregue automaticamente no provisioning; namespaces criados depois entram pelo Caminho A + instalação manual.
+- **On-premise**: sempre Caminho B.
+
 ### Caminho A — Landscape Portal (cenário cloud: Public Edition partner e Steampunk pós-provisioning)
 
-1. Faça logon no Landscape Portal do seu sistema/parceiro.
+1. Faça logon no Landscape Portal do seu sistema/parceiro. (No portal do parceiro GROW, a home tem a aba **Partner** com as seções **Systems** — tiles Systems Overview e Maintain Namespaces — e **Software Product Lifecycle Management** — tiles Register Product, Build Product Version, Check Product Version, Publish Product. Serviço BTP: "Landscape Portal for S/4HANA Cloud", nome técnico `landscapeportalembeddedsteampunk`.)
 2. Na seção **Systems**, clique no tile **Maintain Namespaces**.
 3. Aba **Available Namespaces** (lista seus namespaces de parceiro com descrições) → clique em **Request Namespace**.
 4. No diálogo, informe:
@@ -85,8 +90,8 @@ No cloud, os **developer key e repair key são criados e atribuídos automaticam
 
 Um namespace só pode receber objetos num sistema **depois de instalado nele**. Transportes com objetos `/XXX/...` são bloqueados no import se o namespace não estiver instalado no sistema alvo.
 
-1. No app **Maintain Namespaces**, abra a aba **Systems**. Colunas exibidas: system number, system ID, description, namespaces (installed/available), lifecycle status, system classification.
-2. Clique no sistema alvo para ver os detalhes: cada namespace aparece **verde (instalado)** ou **laranja (não instalado)**.
+1. No app **Maintain Namespaces**, abra a aba **Systems**. Colunas exibidas (UI real do portal GROW): **System Number, System ID, Description, Namespaces (Installed/Available), System Usage, System Status** (a documentação descreve como lifecycle status e system classification).
+2. Clique no sistema alvo para ver os detalhes: tabela **Namespaces (n)** com colunas **Namespace, Description, Installation Status, Installation started by, Installation started at**, botões **Install Namespace** e **Refresh**, seleção por radio button (um por vez). Cada namespace aparece **verde (instalado)** ou **laranja (não instalado)**.
 3. **Classificação do sistema** (quando aplicável): se o sistema ainda não está classificado, o botão **Classify System** fica habilitado — selecione **Development** ou **Test** no drop-down e confirme com OK.
    - ⚠️ **A classificação só pode ser definida UMA vez e nunca pode ser alterada.** Confirme com o usuário antes.
    - Em cenários de **scalable delivery com 3SL**, os sistemas já vêm classificados pelo seu system business type — não é possível (nem necessário) classificar manualmente; a instalação só é permitida no **Partner Add-On Development System** e no **Partner Add-On Test System**.

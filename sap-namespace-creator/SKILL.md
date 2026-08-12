@@ -1,6 +1,20 @@
 ---
 name: sap-namespace-creator
-description: Expert conductor for creating, reserving and installing SAP namespaces in SAP S/4HANA Cloud Public Edition (GROW, 3-system landscape), SAP BTP ABAP Environment (Steampunk) and classic on-premise. Use this skill WHENEVER the user mentions creating/reserving/registering an SAP namespace, "Maintain Namespaces", "Request Namespace", Landscape Portal namespace operations, SAP for Me namespace reservation, partner add-on namespaces, /XXX/ prefix naming, namespace installation status or errors, "namespace não instalado", or asks whether to use Z/Y objects vs a reserved namespace — even if they only say "criar namespace", "reservar namespace", "instalar namespace" or "namespace SAP" without more context. It conducts the full end-to-end process: scenario qualification (customer Z/Y vs partner add-on vs Steampunk), prerequisites (S-user "Reserve Namespaces" authorization, development license, Landscape Portal access), name validation against SAP rules, the Request Namespace flow, installation into the dev/test systems, verification in ADT/Manage Software Components, key user extensibility activation and troubleshooting of every documented error. Do NOT use for generic ABAP development questions unrelated to namespaces (use sap-abap-consultant) or general Public Cloud implementation topics (use sap-s4-public-cloud-consultant).
+description: >-
+  Expert conductor for creating, reserving and installing SAP namespaces —
+  SAP S/4HANA Cloud Public Edition (GROW, 3-system landscape), SAP BTP ABAP
+  Environment (Steampunk) and on-premise. Use WHENEVER the user mentions
+  creating/reserving/registering an SAP namespace, "Maintain Namespaces",
+  "Request Namespace", Landscape Portal, SAP for Me namespace reservation,
+  partner add-on namespaces, /XXX/ prefix naming, namespace installation
+  errors ("namespace não instalado"), or Z/Y vs reserved namespace decisions
+  — even if they only say "criar namespace", "reservar namespace" or
+  "instalar namespace". Conducts the full process: scenario qualification,
+  prerequisites (development license, S-user "Reserve Namespaces", portal
+  access), name validation, Request Namespace flow, installation per system,
+  verification in ADT and troubleshooting. Do NOT use for generic ABAP
+  questions (sap-abap-consultant) or general Public Cloud topics
+  (sap-s4-public-cloud-consultant).
 ---
 
 # SAP Namespace Creator
@@ -56,7 +70,7 @@ Base documental: páginas SAP Help "Maintain Namespaces" (Landscape Portal, loio
 Antes de qualquer instrução, descubra (pergunte se não estiver claro):
 
 1. **Quem desenvolve e para quem?** Cliente para uso próprio → **não precisa de namespace reservado** (usa `Z*`/`Y*` sob `ZCUSTOM_DEVELOPMENT`; key user items usam `YY1_`). Diga isso com clareza e economize semanas do usuário. Parceiro entregando add-on/IP → namespace **obrigatório** (requisito de certificação clean core: todos os objetos do add-on em namespace registrado).
-2. **Qual ambiente?** S/4HANA Cloud Public Edition 3SL (GROW) × SAP BTP ABAP Environment (Steampunk) × on-premise. O app Maintain Namespaces é o mesmo nos dois primeiros, mas **acesso e entorno diferem** — não misture pré-requisitos (cf-eu10/role collections são do Steampunk; o portal do Public Edition vem da URL do landscape do parceiro).
+2. **Qual ambiente?** S/4HANA Cloud Public Edition 3SL (GROW) × SAP BTP ABAP Environment (Steampunk) × on-premise. O app Maintain Namespaces é o mesmo nos dois primeiros, mas **acesso e entorno diferem** — não misture pré-requisitos (cf-eu10/role collections são do Steampunk; o portal do Public Edition vem da URL do landscape do parceiro). Regra de decisão confirmada: o **Request Namespace do portal registra o namespace direto no registro global da SAP** (sem reserva prévia no SAP for Me); no **Steampunk**, a SAP exige registrar via SAP for Me **antes do primeiro provisioning**; on-premise é sempre SAP for Me.
 3. **Em que ponto do processo o usuário está?** Nada reservado ainda / reservado mas não instalado / instalado mas com erro no uso. Entre na fase certa do `processo-completo.md` — não recite o processo inteiro para quem só precisa instalar no sistema de teste.
 
 ### 2. Valide pré-requisitos antes de mandar o usuário clicar
