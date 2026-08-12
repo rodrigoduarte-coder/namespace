@@ -3,21 +3,48 @@
   "evals": [
     {
       "id": 1,
+      "eval_name": "processo-completo-do-zero",
       "prompt": "Preciso criar um namespace para nossa empresa no SAP S/4HANA Cloud public edition (temos o landscape de 3 sistemas do GROW). Nunca fiz isso antes. Me conduza no processo completo do zero: o que preciso reservar na SAP, o que faço no Landscape Portal e como garanto que o namespace fica disponível nos 3 sistemas.",
-      "expected_output": "Guia passo a passo cobrindo: reserva do namespace na SAP (SAP for Me), regras de nomenclatura (/XXX/, 5-10 caracteres incluindo barras, começa com letra), pré-requisitos de acesso ao Landscape Portal (papel/catálogo), uso do app Maintain Namespaces (criar + instalar), instalação nos 3 sistemas (dev/test/prod), verificação e avisos (namespace não pode ser deletado/renomeado).",
-      "files": []
+      "expected_output": "Guia passo a passo cobrindo: qualificação do cenário (parceiro vs cliente), pré-requisitos (development license, S-user com autorização Reserve Namespaces, acesso ao Landscape Portal), regras de nomenclatura (/XXX/, 5-10 caracteres incluindo barras, ideal 5-8), uso do app Maintain Namespaces (Request Namespace + Install Namespace), instalação por sistema (dev/test), instalação automática em provisioning/upgrade, verificação e avisos de irreversibilidade.",
+      "files": [],
+      "assertions": [
+        "Menciona o app 'Maintain Namespaces' do Landscape Portal e o botão 'Request Namespace'",
+        "Informa a regra de nomenclatura: formato /XXX/ com 5 a 10 caracteres no total incluindo as barras (e/ou recomendação de 5-8)",
+        "Instrui a instalação do namespace POR SISTEMA via botão 'Install Namespace' (pelo menos dev e test)",
+        "Avisa que a reserva do nome é permanente/global e que o namespace não pode ser renomeado",
+        "Cita pré-requisitos: development license e/ou S-user com autorização 'Reserve Namespaces'",
+        "Menciona que provisioning de novos sistemas e upgrades instalam os namespaces automaticamente",
+        "Antes de prescrever a reserva, qualifica o cenário (cliente para uso próprio usa Z*/Y* sem namespace reservado; parceiro add-on precisa)"
+      ]
     },
     {
       "id": 2,
+      "eval_name": "transporte-bloqueado-namespace-ausente",
       "prompt": "Sou desenvolvedor num parceiro SAP. Reservamos um namespace de desenvolvimento junto à SAP e ele já aparece no sistema de desenvolvimento do S/4HANA Cloud public edition do cliente, mas quando o transporte chega no sistema de teste dá erro dizendo que o namespace não existe lá. Como resolvo?",
-      "expected_output": "Diagnóstico correto: o namespace precisa ser instalado em CADA sistema do landscape via app Maintain Namespaces do Landscape Portal antes que objetos nele possam ser importados. Instruções para instalar no sistema de teste (e produção), e orientação sobre verificação de status.",
-      "files": []
+      "expected_output": "Diagnóstico correto: o namespace precisa ser instalado em CADA sistema do landscape via app Maintain Namespaces do Landscape Portal antes que objetos nele possam ser importados. Instruções para instalar no sistema de teste, acompanhar status até Installed, retry em caso de erro, e reimportar o transporte.",
+      "files": [],
+      "assertions": [
+        "Diagnostica corretamente que o namespace deve ser instalado em cada sistema do landscape antes do import de transportes com objetos dele",
+        "Instrui: Landscape Portal → Maintain Namespaces → aba Systems → selecionar o sistema de teste → 'Install Namespace'",
+        "Menciona o acompanhamento de status (Refresh / Installing / Installed) e/ou retry em 'Error during installation'",
+        "Não sugere re-reservar o namespace nem usar transações on-premise como SE03 no contexto cloud",
+        "Orienta reimportar o transporte após a instalação concluir"
+      ]
     },
     {
       "id": 3,
+      "eval_name": "decisao-z-vs-namespace-reservado",
       "prompt": "Estamos avaliando developer extensibility no S/4HANA Cloud public edition. Quando compensa registrar um namespace próprio em vez de usar objetos Z? Quais são as regras de nomenclatura e restrições de um namespace reservado, e qual o processo para obter um?",
-      "expected_output": "Explicação da diferença Z/Y (customer namespace local, sem proteção contra colisão) vs namespace reservado (protegido globalmente, obrigatório para parceiros que entregam IP a clientes), regras de nomenclatura exatas, restrições (irreversível, não renomeável), e resumo do processo de reserva (SAP for Me) + instalação (Landscape Portal, Maintain Namespaces).",
-      "files": []
+      "expected_output": "Explicação da diferença Z/Y (customer name range, sem reserva, para desenvolvimento próprio do cliente) vs namespace reservado (protegido globalmente, obrigatório para parceiros que entregam add-ons/IP), regras de nomenclatura exatas, restrições (permanente, não renomeável), e resumo do processo (Request Namespace no Landscape Portal + instalação por sistema).",
+      "files": [],
+      "assertions": [
+        "Afirma que desenvolvimento próprio do cliente usa Z*/Y* e NÃO exige namespace reservado",
+        "Afirma que parceiros entregando add-on/IP PRECISAM de namespace registrado (todos os objetos do add-on)",
+        "Dá as regras de nomenclatura: 5-10 caracteres incluindo as duas barras (3-8 entre barras) e/ou recomendação 5-8",
+        "Menciona irreversibilidade: sem renomeação e deleção restrita",
+        "Resume o processo em duas etapas: reserva (Request Namespace no Landscape Portal / SAP for Me) e instalação por sistema (Install Namespace)",
+        "Menciona o desconto do prefixo no limite de 30 caracteres dos nomes de objetos OU o impacto do comprimento do prefixo"
+      ]
     }
   ]
 }
