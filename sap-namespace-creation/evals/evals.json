@@ -1,0 +1,23 @@
+{
+  "skill_name": "sap-namespace-creation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Preciso criar um namespace para nossa empresa no SAP S/4HANA Cloud public edition (temos o landscape de 3 sistemas do GROW). Nunca fiz isso antes. Me conduza no processo completo do zero: o que preciso reservar na SAP, o que faço no Landscape Portal e como garanto que o namespace fica disponível nos 3 sistemas.",
+      "expected_output": "Guia passo a passo cobrindo: reserva do namespace na SAP (SAP for Me), regras de nomenclatura (/XXX/, 5-10 caracteres incluindo barras, começa com letra), pré-requisitos de acesso ao Landscape Portal (papel/catálogo), uso do app Maintain Namespaces (criar + instalar), instalação nos 3 sistemas (dev/test/prod), verificação e avisos (namespace não pode ser deletado/renomeado).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Sou desenvolvedor num parceiro SAP. Reservamos um namespace de desenvolvimento junto à SAP e ele já aparece no sistema de desenvolvimento do S/4HANA Cloud public edition do cliente, mas quando o transporte chega no sistema de teste dá erro dizendo que o namespace não existe lá. Como resolvo?",
+      "expected_output": "Diagnóstico correto: o namespace precisa ser instalado em CADA sistema do landscape via app Maintain Namespaces do Landscape Portal antes que objetos nele possam ser importados. Instruções para instalar no sistema de teste (e produção), e orientação sobre verificação de status.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Estamos avaliando developer extensibility no S/4HANA Cloud public edition. Quando compensa registrar um namespace próprio em vez de usar objetos Z? Quais são as regras de nomenclatura e restrições de um namespace reservado, e qual o processo para obter um?",
+      "expected_output": "Explicação da diferença Z/Y (customer namespace local, sem proteção contra colisão) vs namespace reservado (protegido globalmente, obrigatório para parceiros que entregam IP a clientes), regras de nomenclatura exatas, restrições (irreversível, não renomeável), e resumo do processo de reserva (SAP for Me) + instalação (Landscape Portal, Maintain Namespaces).",
+      "files": []
+    }
+  ]
+}
